@@ -1,14 +1,14 @@
 module.exports = function(grunt) {
-
+    var config = require('./.screeps.json')
     grunt.loadNpmTasks('grunt-screeps');
 
     grunt.initConfig({
         screeps: {
             options: {
-                email: 'ladefoged1991@gmail.com',
-                token: '2d49a873-304a-46fc-a82d-6849e9bba804',
-                branch: 'default',
-                //server: 'season'
+                email: config.email,
+                token: config.token,
+                branch: config.branch,
+                ptr: config.ptr
             },
             dist: {
                 src: ['src/*.js']
