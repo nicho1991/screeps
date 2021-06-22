@@ -4,4 +4,7 @@ module.exports.loop = function () {
         Memory.SCRIPT_VERSION = SCRIPT_VERSION
         console.log('New code uplodated')
     }
+    
+    console.log('hi!')
+    
 }
