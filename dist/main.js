@@ -11,6 +11,16 @@ var moveToSpawn = (creep) => {
     }
 };
 
+function GetCreepsByRole(role){
+    var CreepList = [];
+      for (var creepname in Game.creeps){
+        if (Game.creeps[creepname].memory.role == role){
+        CreepList.push(Game.creeps[creepname]);
+      }
+    }
+    return CreepList
+  }
+
 module.exports.loop = function () {
     require('version')
     if(!Memory.SCRIPT_VERSION || Memory.SCRIPT_VERSION != SCRIPT_VERSION) {
@@ -18,22 +28,23 @@ module.exports.loop = function () {
         console.log('New code uplodated')
     }
 
-    var harvesters = harvesters = _(Game.creeps).filter({ memory: { role: 'harvester' }}) as Creep[]
-    if (harvesters.size() < 1) {  // spawn harvester if none left
+    var harvesters = GetCreepsByRole('harvester')
+    if (harvesters.length < 1) {  // spawn harvester if none left
+        console.log('spawning harvester')
         Game.spawns['Spawn1'].spawnCreep([WORK, CARRY, MOVE], 'Worker1', {
             memory: {role: 'harvester'}
         });
     }
-    harvesters.each
-    var creep = Game.creeps['Harvester1'];
 
-    if(creep.store.getFreeCapacity() > 0) {
-        moveToSource(creep)
-    }
-    else {
-        moveToSpawn(creep)
-    }
+    harvesters.forEach(creep => {
+        if (creep.store.getFreeCapacity() > 0) {
+            moveToSource(creep)
+        }
+        else {
+            moveToSpawn(creep)
+        }
+    })
 
 
-    
+
 }
