@@ -55,7 +55,7 @@ var MoveToSpawn = (creep, spawn) => {
 var UpgradeRoomController = (upgraders, controller, spawn, room) => {
  
     upgraders.forEach(creep => {
-        if (creep.store.getUsedCapacity()) {
+        if (creep.store.getUsedCapacity() === 0 ) {
             creep.moveTo(spawn, {visualizePathStyle: {stroke: UPGRADER_MOVE_COLOR}})
             if (room.energyAvailable > 250)
                 creep.withdraw(spawn, RESOURCE_ENERGY, 50)
