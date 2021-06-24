@@ -37,7 +37,8 @@ var SpawnHarvesters = (harvesters, spawn, roomSources) => {
 
 var MoveToSource = (creep) => {
     var source = Game.getObjectById(creep.memory.source)
-    if (creep.room.find(FIND_HOSTILE_CREEPS)[0].pos.isNearTo(source)) {
+    var hostiles = creep.room.find(FIND_HOSTILE_CREEPS)[0]
+    if (hostiles && hostiles.pos.isNearTo(source)) {
         console.log('Creep ' + creep.name + ' source is near hostile.. waiting')
     }
     else if(creep.harvest(source) === ERR_NOT_IN_RANGE) {
