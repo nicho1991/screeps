@@ -1,6 +1,6 @@
 const HARVESTER = 'harvester';
 const HARVESTER_MOVE_COLOR = '#ffaa00';
-const HARVESTER_PER_SPAWN = 2;
+const HARVESTER_PER_SOURCE = 1;
 const HARVESTER_SPAWN_ENERGY_REQUIREMENT = 200;
 const HARVESTER_ATTRIBUTES = [WORK, CARRY, MOVE];
 
@@ -25,7 +25,7 @@ var GetMyHarvesters = (myCreepsInRoom) => {
 }
 
 var SpawnHarvesters = (harvesters, spawn, roomSources) => {
-    if (harvesters.length < roomSources.length * HARVESTER_PER_SPAWN && spawn.room.energyAvailable > HARVESTER_SPAWN_ENERGY_REQUIREMENT ) {
+    if (harvesters.length < (roomSources.length * HARVESTER_PER_SOURCE) && (spawn.room.energyAvailable > HARVESTER_SPAWN_ENERGY_REQUIREMENT)) {
         var havesterNumber = harvesters.length
 
         console.log('spawning harvester: ' + havesterNumber + ' in room: ' + spawn.room.name)
@@ -55,7 +55,7 @@ var HarvestersFarm = (harvesters, collectionSpawn) => {
             MoveToSource(creep)
         }
         else {
-            MoveToSpawn(creep,  collectionSpawn)
+            MoveToSpawn(creep, collectionSpawn)
         }
     })
 }
