@@ -1,28 +1,6 @@
-const constants = require('./constants');
-
-var moveToSource = (creep) => {
-    var source = Game.getObjectById(creep.memory.source)
-    if(creep.harvest(source) === ERR_NOT_IN_RANGE) {
-        creep.moveTo(source, {visualizePathStyle: {stroke: constants.COLORS.MOVE}});
-    }
-};
-
-var moveToSpawn = (creep) => {
-    if( creep.transfer(Game.spawns['Spawn1'], RESOURCE_ENERGY) === ERR_NOT_IN_RANGE ) {
-        creep.moveTo(Game.spawns['Spawn1'], {visualizePathStyle: {stroke: constants.COLORS.MOVE}});
-    }
-};
-
-function GetCreepsByRole(role){
-    var CreepList = [];
-        for (var creepname in Game.creeps){
-        if (Game.creeps[creepname].memory.role === role){
-        CreepList.push(Game.creeps[creepname]);
-        }
-    }
-    return CreepList
-}
-
+const MOVEMENT = require('./helpers_Movement')
+const CREEPS = require('./helpers_Creeps')
+const CONSTANTS = require('Constants');
 module.exports.loop = function () {
     require('version')
     if(!Memory.SCRIPT_VERSION || Memory.SCRIPT_VERSION !== SCRIPT_VERSION) {
@@ -30,7 +8,7 @@ module.exports.loop = function () {
         console.log('New code uplodated')
     }
 
-    var harvesters = GetCreepsByRole("harvester")
+    var harvesters = CREEPS.GetCreepsByRole(CONSTANTS.ROLES.HARVESTER)
     var spawn = Game.spawns["Spawn1"]
     var listSources = spawn.room.find(FIND_SOURCES)
     if (harvesters.length < listSources.length * 2 && spawn.room.energyAvailable > 200 ) {  // spawn harvester if none left
@@ -38,16 +16,16 @@ module.exports.loop = function () {
 
         console.log('spawning harvester: ' + havesterNumber)
         spawn.spawnCreep([WORK, CARRY, MOVE], 'Harvester' + havesterNumber, {
-            memory: {role: 'harvester', source: listSources[havesterNumber % listSources.length].id}
+            memory: {role: CONSTANTS.ROLES.HARVESTER, source: listSources[havesterNumber % listSources.length].id}
         });
     }
 
     harvesters.forEach(creep => {
         if (creep.store.getFreeCapacity() > 0) {
-            moveToSource(creep)
+            MOVEMENT.moveToSource(creep)
         }
         else {
-            moveToSpawn(creep)
+            MOVEMENT.moveToSpawn(creep, Game.spawns['Spawn1'])
         }
     })
 
