@@ -3,6 +3,7 @@ const HARVESTER_MOVE_COLOR = '#ffaa00';
 const HARVESTER_PER_SPAWN = 2;
 const HARVESTER_SPAWN_ENERGY_REQUIREMENT = 200;
 const HARVESTER_ATTRIBUTES = [WORK, CARRY, MOVE];
+
 var MyRooms = () => {
     var RoomList = [];
     for (var roomName in Game.rooms){
@@ -13,15 +14,6 @@ var MyRooms = () => {
     return RoomList
 }
 
-var MySpawnsInRoom = (room) => {
-    var RoomList = [];
-    for (var roomName in Game.rooms){
-        if (Game.rooms[roomName]){
-            RoomList.push(Game.rooms[roomName]);
-        }
-    }
-    return RoomList
-}
 var GetMyHarvesters = (myCreepsInRoom) => {
     var CreepList = [];
         for (var creepname in myCreepsInRoom){
@@ -67,7 +59,6 @@ var HarvestersFarm = (harvesters, collectionSpawn) => {
         }
     })
 }
-
  
 var ManageHarvesters = () => {
     var rooms =  MyRooms()
