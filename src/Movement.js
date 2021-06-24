@@ -1,4 +1,4 @@
-const CONSTANTS = require('Constants');
+const CONSTANTS = require('./Constants');
 var moveToSource = (creep) => {
     var source = Game.getObjectById(creep.memory.source)
     if(creep.harvest(source) === ERR_NOT_IN_RANGE) {
